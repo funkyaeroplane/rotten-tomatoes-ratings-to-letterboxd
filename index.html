@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotten Tomatoes Ratings Recovery</title>
+</head>
+<body>
+
+    <!--PASTE RATINGS ELEMENTS HERE-->
+
+    <p id="printingParagraph">JSON PRINTING WILL APPEAR HERE</p>
+    
+    <script>
+        //console.log("SCRIPT STARTED");
+        
+        let ratingsArray = [];
+     
+        // run mainScript function when body of html loads
+        window.addEventListener("load", mainScript, false);
+     
+        // runs on load of body
+        function mainScript() {
+     
+             //console.log("MAIN SCRIPT FUNCTION STARTED");
+     
+             // store all the ratings/reviews elements
+             let ratingsEls = document.querySelectorAll('.ratings__user-rating-review');
+     
+             //for loop over ratings
+             for (let movie of ratingsEls) {
+                 //get movie name
+                 let movieTitle = movie.querySelector('a[class="ratings__movie-title"]').getAttribute("title");
+                 //console.log("movieTitle: " + movieTitle);
+     
+                 //get movie year
+                 let movieYearBrackets = movie.querySelector('span[class="small subtle"]').textContent;
+                 //console.log("movieYearBrackets: " + movieYearBrackets);
+                 
+                 //get rid of () around year
+                 let movieYear = movieYearBrackets.slice(1, -1);
+                 //console.log("movieYear: " + movieYear);
+     
+                 //get date of rating
+                 let ratingAge = movie.querySelector('a[class="ratings__age"]').textContent;
+                 //console.log("ratingAge: " + ratingAge);
+     
+
+                 let ratingDate;
+
+                 //cases to check to convert age to an actual date
+                 switch (ratingAge) {
+                     case "14 years ago":
+                         ratingDate = "2008-12-31";
+                         break;
+                     case "13 years ago":
+                         ratingDate = "2009-12-31";
+                         break;
+                     case "12 years ago":
+                         ratingDate = "2010-12-31";
+                         break;
+                     case "11 years ago":
+                         ratingDate = "2011-12-31";
+                         break;
+                     case "10 years ago":
+                         ratingDate = "2012-12-31";
+                         break;
+                     case "9 years ago":
+                         ratingDate = "2013-12-31";
+                         break;
+                     case "8 years ago":
+                         ratingDate = "2014-12-31";
+                         break;
+                     case "7 years ago":
+                         ratingDate = "2015-12-31";
+                         break;
+                     case "6 years ago":
+                         ratingDate = "2016-12-31";
+                         break;
+                     case "5 years ago":
+                         ratingDate = "2017-12-31";
+                         break;
+                     case "4 years ago":
+                         ratingDate = "2018-12-31";
+                         break;
+                     case "3 years ago":
+                         ratingDate = "2019-12-31";
+                         break;
+                     case "2 years ago":
+                         ratingDate = "2020-12-31";
+                         break;
+                     case "1 year ago":
+                         ratingDate = "2021-12-31";
+                         break;
+                     case "11 months ago":
+                         ratingDate = "2022-01-30";
+                         break;
+                     case "10 months ago":
+                         ratingDate = "2022-02-28";
+                         break;
+                     case "9 months ago":
+                         ratingDate = "2022-03-30";
+                         break;
+                     case "8 months ago":
+                         ratingDate = "2022-04-30";
+                         break;
+                     case "7 months ago":
+                         ratingDate = "2022-05-30";
+                         break;
+                     case "6 months ago":
+                         ratingDate = "2022-06-30";
+                         break;
+                     case "5 months ago":
+                         ratingDate = "2022-07-30";
+                         break;
+                     case "4 months ago":
+                         ratingDate = "2022-08-30";
+                         break;
+                     case "3 months ago":
+                         ratingDate = "2022-09-30";
+                         break;
+                     case "2 months ago":
+                         ratingDate = "2022-10-30";
+                         break;
+                     case "1 month ago":
+                         ratingDate = "2022-11-30";
+                         break;
+                     default:
+                         ratingDate = "2022-12-01";
+                 }
+                 
+                 //console.log("ratingDate: " + ratingDate);
+     
+                 //loop over stars
+                 let tempRatingTotal = 0;
+                 let starsContainer = movie.querySelector('span[class="star-display"]');
+                 let stars = starsContainer.querySelectorAll('span');
+                 let tempStarValue = 0;
+                 for (let star of stars) {
+                     //add each star value to get total
+                     if (star.getAttribute("class") == "star-display__filled ")  {
+                         tempStarValue = 1;
+                     }
+                     else if (star.getAttribute("class") == "star-display__half ")  {
+                         tempStarValue = 0.5;
+                     }
+                     else {
+                         tempStarValue = 0;
+                     }
+                     tempRatingTotal += tempStarValue;
+                 }
+     
+                 //console.log("rating: " + tempRatingTotal);
+                 
+                 let ratingObject = {
+                     title: movieTitle,
+                     year: movieYear,
+                     rating: tempRatingTotal,
+                     watchedDate: ratingDate
+                 };
+     
+                 //add movie rating object to ratings array
+                 ratingsArray.push(ratingObject);
+             }
+     
+             // convert object to JSON
+             let ratingsArrayJSON = JSON.stringify(ratingsArray);
+             
+             // get p element for printing ratings JSON data
+             let printing = document.querySelector('#printingParagraph');
+     
+             // change textContent to ratings JSON data
+             printing.textContent = ratingsArrayJSON;
+     
+        }
+        
+     </script>
+
+
+</body>
+</html>
