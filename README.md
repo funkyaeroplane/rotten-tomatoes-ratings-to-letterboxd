@@ -3,6 +3,8 @@ JavaScript that you can use with a saved html page of your Rotten Tomatoes ratin
 
 This is some JavaScript I wrote to help recover your Rotten Tomatoes ratings data in order to import into Letterboxd.
 
+You need to save the web page with your ratings as a .html file. The code uses DOM access to store all the ratings elements by looking for the class they share and then looping through each movie and adding the data to a JavaScript object and then converting that to JSON and pasting it into a paragraph tag at the bottom of the page that you can copy to a csv converter.
+
 # requirements
 
 - Code editor
